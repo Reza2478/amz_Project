@@ -7,12 +7,12 @@ import EDContextProvider from './context/EDContextProvider';
 
 // Components
 import Posts from './components/Posts';
-import Add from './components/Add';
+import Form from './components/Form';
 
 function App() {
   return (
       <EDContextProvider>
-        <Add/>
+        <Form/>
         <Posts/>
       </EDContextProvider>
   );

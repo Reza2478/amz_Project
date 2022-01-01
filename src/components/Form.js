@@ -5,7 +5,7 @@ import { edContext } from '../context/EDContextProvider';
 
 
 //styles 
-import styles from "./Add.module.css"
+import styles from "./Form.module.css"
 
 const initialState=
     {

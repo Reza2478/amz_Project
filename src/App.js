@@ -1,20 +1,20 @@
 import './App.css';
 
 //Contexts 
-// import PostContextProvider from './context/PostContextProvider';
+
 import EDContextProvider from './context/EDContextProvider';
 
 
 // Components
 import Posts from './components/Posts';
+import Add from './components/Add';
 
 function App() {
   return (
-    
       <EDContextProvider>
+        <Add/>
         <Posts/>
       </EDContextProvider>
-    
   );
 }
 

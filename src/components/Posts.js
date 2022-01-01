@@ -9,29 +9,26 @@ import { getPosts } from "../services/api";
 // Context
 import { edContext } from "../context/EDContextProvider";
 
+//styles
+import styles from "./Posts.module.css";
+
 const Posts = () => {
   const { state, getInitialData } = useContext(edContext);
-  console.log({ state });
+  
 
   useEffect(() => {
     getPosts()
-      .then((data) => {
-        console.log({ data });
+      .then((data) => { 
         getInitialData(data);
       })
       .catch((error) => console.error(error));
-
-    // const fetchAPI = async () => {
-    //   setPosts(await getPosts());
-    // };
-      
-    // fetchAPI();
   }, []);
 
+ 
   return (
-    <div>
+    <div className={ styles.container}>
       {state?.posts?.map((post) => (
-        <Post key={post.id} postData={post} />
+        <Post key={post.id} postData={post}  />
       ))}
     </div>
   );

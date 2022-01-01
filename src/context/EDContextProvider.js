@@ -3,15 +3,14 @@ import React, { useReducer, createContext } from "react";
 const edReducer = (state, action) => {
   switch (action.type) {
     case "SET_INITIAL_DATA":
-        console.log(action.payload);
       return { ...state, posts: action.payload.posts };
     case "ADD_ITEM":
-      state.postItems.push({
+      state.posts.push({
         ...action.payload,
       });
       return {
         ...state,
-        postItems: [...state.postItems],
+        posts: [...state.posts],
       };
     case "REMOVE_ITEM":
       const newPostItems = state.posts.filter(
@@ -22,8 +21,24 @@ const edReducer = (state, action) => {
         ...state,
         posts: [...newPostItems],
       };
-    // case "EDIT_ITEM":
-
+    case "SELECT_ITEM":
+        const temp=state.posts.find(item => item.id === action.payload.id) 
+        
+        return {
+            ...state,
+            postEdit:temp,
+            EditOrDelete:true,
+        }
+        case "EDIT_ITEM":
+            const list=state.posts;
+        const index=state.posts.findIndex(item => item.id === action.payload.id) 
+        list[index]=action.payload;
+        return {
+            ...state,
+            posts:list,
+            EditOrDelete:false,
+            postEdit:{}
+        }
     default:
       return state;
   }
@@ -31,7 +46,6 @@ const edReducer = (state, action) => {
 
 const getInitialData = (dispatch) => {
   return async (posts) => {
-    console.log({ posts });
     await dispatch({ type: "SET_INITIAL_DATA", payload: {posts} });
   };
 };
@@ -39,7 +53,7 @@ const getInitialData = (dispatch) => {
 export const edContext = createContext();
 
 const EDContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(edReducer, { posts: [] });
+  const [state, dispatch] = useReducer(edReducer, { posts: [],postEdit:{} ,EditOrDelete:false});
 
   return (
     <edContext.Provider value={{ state, dispatch, getInitialData:getInitialData(dispatch)} }>

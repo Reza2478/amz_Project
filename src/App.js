@@ -1,21 +1,9 @@
-import './App.css';
-
-//Contexts 
-
-import EDContextProvider from './context/EDContextProvider';
-
-
+import React from "react";
 // Components
-import Posts from './components/Posts';
-import Form from './components/Form';
+import Home from "./pages/Home";
 
 function App() {
-  return (
-      <EDContextProvider>
-        <Form/>
-        <Posts/>
-      </EDContextProvider>
-  );
+  return <Home />;
 }
 
 export default App;

@@ -4,9 +4,6 @@ import React, { useState,useContext,useEffect }from 'react';
 import { edContext } from '../context/EDContextProvider';
 
 
-//styles 
-import styles from "./Form.module.css"
-
 const initialState=
     {
         userId:"",
@@ -48,13 +45,13 @@ const Add = () => {
 
     return (
         
-        <div className={styles.container}>
-                <div className={styles.tops}>
-                    <form className={styles.forminput}>
-                        <input className={styles.inputbox1} type="text" name="userId" onChange={changeHandler} value={data?.userId} placeholder="User id select"/>
-                        <input className={styles.inputbox2} type="text" name="title" onChange={changeHandler} value={data?.title} placeholder="title input"/>   
-                        <input className={styles.inputbox3} type="text" name="body" onChange={changeHandler} value={data?.body} placeholder="Body input"/>                 
-                        <button className={styles.btn} onClick={submit} type="submit">{state.EditOrDelete?"Edit Post":"Add Post"}</button>     
+        <div className='bg-primary'>
+                <div >
+                    <form >
+                        <input  type="text" name="userId" onChange={changeHandler} value={data?.userId} placeholder="User id select"/>
+                        <input  type="text" name="title" onChange={changeHandler} value={data?.title} placeholder="title input"/>   
+                        <input  type="text" name="body" onChange={changeHandler} value={data?.body} placeholder="Body input"/>                 
+                        <button onClick={submit} type="submit">{state.EditOrDelete?"Edit Post":"Add Post"}</button>     
                     </form>
             </div>
         </div>

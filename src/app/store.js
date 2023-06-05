@@ -3,13 +3,13 @@ import { configureStore } from "@reduxjs/toolkit";
 //Reducers
 import usersReducer from "../features/usersSlice";
 import filterReducer from "../features/filterSlice";
-import teamsReducer from "../features/teamsSlice";
+import formReducer from '../features/formSlice' 
 
 const store =configureStore({
     reducer:{
         users:usersReducer,
         filter:filterReducer,
-        teams:teamsReducer
+        form:formReducer
     },
     middleware: (getDefaultMiddleware)=>getDefaultMiddleware()
 })

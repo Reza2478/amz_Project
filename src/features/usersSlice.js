@@ -19,6 +19,28 @@ const fetchUsers = createAsyncThunk("users/fetchusers", async (thunkAPI) => {
 const usersSlice = createSlice({
   name: "users",
   initialState,
+  reducers:{
+    editUser:(state,action)=>{
+      const userIndex=state.users.findIndex(item=>item.id===action.payload.id)
+      const user=state.users[userIndex]
+      user.name.firstname=action.payload.firstname;
+      user.name.lastname=action.payload.lastname;
+      user.phone=action.payload.phone;
+      user.email=action.payload.email;
+
+    },
+    deleteUser:(state,action)=>{
+      state.users=state.users.filter(item=>item.id!==action.payload.id)
+    },
+    addToTeams: (state, action) => {
+      const userIndex= state.users.findIndex(item=>item.id===action.payload.id)
+      state.users[userIndex]={...state.users[userIndex],added:true}
+    },
+    removeFromTeams: (state, action) => {
+      const userIndex= state.users.findIndex(item=>item.id===action.payload.id)
+      state.users[userIndex].added=false
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -40,4 +62,5 @@ const usersSlice = createSlice({
 });
 
 export default usersSlice.reducer;
+export const {deleteUser,editUser,addToTeams,removeFromTeams}=usersSlice.actions;
 export { fetchUsers };

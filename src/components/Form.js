@@ -1,61 +1,81 @@
-import React, { useState,useContext,useEffect }from 'react';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-//Context
-import { edContext } from '../context/EDContextProvider';
+//Redux
+import { close } from "../features/formSlice";
+import { editUser } from "../features/usersSlice";
 
+const Form = () => {
+  const state = useSelector((state) => state.form);
+  const dispatch = useDispatch();
+  const [data, setData] = useState(state);
+  const changeHandler = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
 
-const initialState=
-    {
-        userId:"",
-        body:"",
-        title:"",
-        id:""
-    }
+  useEffect(() => {
+    setData(state);
+  }, [state]);
 
-const Add = () => {
-    const {state,dispatch}=useContext(edContext);
+  const submit = (event) => {
+    event.preventDefault();
+    dispatch(close());
+    dispatch(editUser(data))
+  };
 
-    const [data,setData]=useState(initialState)
-    console.log(state.postEdit)
-
-    const changeHandler = event => {
-        setData({ ...data, [event.target.name]: event.target.value })
-    }
-
-    useEffect(() => {
-        setData(state.postEdit)
-    },[state.postEdit])
-
-    const submit =(event) => {
-        if(state.EditOrDelete===false)
-        {
-            event.preventDefault()
-        data.id=Math.random()*100000
-        dispatch({type:"ADD_ITEM",payload:data})
-        setData(initialState)
-        }
-        else{
-            event.preventDefault()
-        
-        dispatch({type:"EDIT_ITEM",payload:data})
-        setData(initialState)
-        }
-        
-    }
-
-    return (
-        
-        <div className='bg-primary'>
-                <div >
-                    <form >
-                        <input  type="text" name="userId" onChange={changeHandler} value={data?.userId} placeholder="User id select"/>
-                        <input  type="text" name="title" onChange={changeHandler} value={data?.title} placeholder="title input"/>   
-                        <input  type="text" name="body" onChange={changeHandler} value={data?.body} placeholder="Body input"/>                 
-                        <button onClick={submit} type="submit">{state.EditOrDelete?"Edit Post":"Add Post"}</button>     
-                    </form>
-            </div>
-        </div>
-    );
+  return (
+    <div className="bg-main rounded-md p-4">
+      <form className="flex items-center justify-center flex-col gap-y-3 ">
+        <input
+          hidden
+          type="text"
+          name="id"
+          onChange={changeHandler}
+          value={data?.id}
+          placeholder="User id select"
+        />
+        <input
+          className="p-1 transition-all focus:border-primary focus:text-primary drop-shadow-md bg-transparent border-b border-second outline-none  text-second"
+          type="text"
+          name="firstname"
+          onChange={changeHandler}
+          value={data?.firstname}
+          placeholder="firstname"
+        />
+        <input
+          className="p-1 transition-all focus:border-primary focus:text-primary drop-shadow-md bg-transparent border-b border-second outline-none  text-second"
+          type="text"
+          name="lastname"
+          onChange={changeHandler}
+          value={data?.lastname}
+          placeholder="lastname"
+        />
+        <input
+          className="p-1 transition-all focus:border-primary focus:text-primary drop-shadow-md bg-transparent border-b border-second outline-none  text-second"
+          type="text"
+          name="email"
+          onChange={changeHandler}
+          value={data?.email}
+          placeholder="email"
+        />
+        <input
+          className="p-1 transition-all focus:border-primary focus:text-primary drop-shadow-md bg-transparent border-b border-second outline-none  text-second"
+          type="text"
+          name="phone"
+          onChange={changeHandler}
+          value={data?.phone}
+          placeholder="phone"
+        />
+        <button
+          onClick={submit}
+          className="p-2 transition-all hover:bg-primary w-full bg-third text-second rounded-md shadow-md mt-3"
+          type="submit"
+        >
+          Edit
+        </button>
+      </form>
+    </div>
+  );
 };
 
-export default Add;
+export default Form;
